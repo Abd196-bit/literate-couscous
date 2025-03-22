@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, redirect, url_for, flash, request, session
 from flask_login import login_user, logout_user, login_required, current_user
 from werkzeug.security import generate_password_hash
-from app import db
+from app import db, csrf
 from models import User
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, EmailField
@@ -15,11 +15,17 @@ auth_bp = Blueprint('auth', __name__)
 
 # Form classes
 class LoginForm(FlaskForm):
+    class Meta:
+        csrf = False  # Disable CSRF for this form
+        
     username = StringField('Username', validators=[DataRequired()])
     password = PasswordField('Password', validators=[DataRequired()])
     submit = SubmitField('Login')
 
 class RegistrationForm(FlaskForm):
+    class Meta:
+        csrf = False  # Disable CSRF for this form
+        
     username = StringField('Username', validators=[DataRequired(), Length(min=3, max=64)])
     email = EmailField('Email', validators=[DataRequired(), Email()])
     password = PasswordField('Password', validators=[DataRequired(), Length(min=6)])
@@ -43,6 +49,7 @@ def index():
     return render_template('index.html')
 
 @auth_bp.route('/login', methods=['GET', 'POST'])
+@csrf.exempt
 def login():
     logger.info("Login route accessed")
     
@@ -84,6 +91,7 @@ def login():
     return render_template('login.html', form=form)
 
 @auth_bp.route('/register', methods=['GET', 'POST'])
+@csrf.exempt
 def register():
     if current_user.is_authenticated:
         return redirect(url_for('chat.chat_page'))
