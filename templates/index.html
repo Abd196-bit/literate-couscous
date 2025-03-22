@@ -1,0 +1,13 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="landing-container">
+    <h1 class="landing-title">We Quack</h1>
+    <p class="landing-subtitle">A real-time chat application with pixel-perfect styling. Connect with friends, create groups, and chat in real-time.</p>
+    
+    <div class="landing-buttons">
+        <a href="{{ url_for('auth.login') }}" class="btn">Login</a>
+        <a href="{{ url_for('auth.register') }}" class="btn">Register</a>
+    </div>
+</div>
+{% endblock %}

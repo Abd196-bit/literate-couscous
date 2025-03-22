@@ -1,0 +1,108 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div id="chat-container" class="chat-container" data-user-id="{{ current_user.id }}">
+    <!-- Header -->
+    <div class="header">
+        <h2>We Quack</h2>
+        <div class="d-flex align-items-center">
+            <span id="connection-status" class="friend-status status-offline me-2">Disconnected</span>
+            <button id="logout-btn" class="btn btn-sm">Logout</button>
+        </div>
+    </div>
+    
+    <!-- Sidebar with contacts and groups -->
+    <div class="sidebar">
+        <!-- Friends Section -->
+        <div id="friends-header" class="friends-header">
+            <h4>Friends</h4>
+            <button id="new-chat-btn" class="btn btn-sm">+</button>
+        </div>
+        <div id="friends-list" class="friends-list"></div>
+        
+        <!-- Groups Section -->
+        <div id="groups-header" class="groups-header">
+            <h4>Groups</h4>
+            <button id="new-group-btn" class="btn btn-sm">+</button>
+        </div>
+        <div id="groups-list" class="groups-list"></div>
+    </div>
+    
+    <!-- Main chat area -->
+    <div class="main">
+        <div class="chat-header">
+            <h3 id="chat-title">Select a conversation</h3>
+        </div>
+        
+        <div id="chat-messages" class="chat-messages"></div>
+        
+        <div class="chat-input">
+            <input type="text" id="message-input" placeholder="Type your message...">
+            <button id="send-button" class="btn">Send</button>
+        </div>
+    </div>
+    
+    <!-- Create Group Modal -->
+    <div id="new-group-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Create New Group</h3>
+                <span class="close">&times;</span>
+            </div>
+            
+            <form id="create-group-form">
+                <div class="form-group">
+                    <label for="group-name">Group Name</label>
+                    <input type="text" id="group-name" class="form-control" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="group-description">Description (Optional)</label>
+                    <textarea id="group-description" class="form-control"></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label>Add Members</label>
+                    <div id="group-members"></div>
+                </div>
+                
+                <div class="form-group d-flex justify-content-end">
+                    <button type="button" class="btn btn-sm modal-cancel me-2">Cancel</button>
+                    <button type="submit" class="btn btn-sm">Create Group</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- New Chat Modal -->
+    <div id="new-chat-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Start New Chat</h3>
+                <span class="close">&times;</span>
+            </div>
+            
+            <form id="start-chat-form">
+                <div class="form-group">
+                    <label for="chat-user">Select User</label>
+                    <select id="chat-user" class="form-control" required></select>
+                </div>
+                
+                <div class="form-group d-flex justify-content-end">
+                    <button type="button" class="btn btn-sm modal-cancel me-2">Cancel</button>
+                    <button type="submit" class="btn btn-sm">Start Chat</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<!-- Socket.IO Script -->
+<script src="{{ url_for('static', filename='js/socket.js') }}"></script>
+
+<!-- Chat Scripts -->
+<script src="{{ url_for('static', filename='js/chat.js') }}"></script>
+<script src="{{ url_for('static', filename='js/ui.js') }}"></script>
+{% endblock %}
