@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, redirect, url_for, flash, request
+from flask import Blueprint, render_template, redirect, url_for, flash, request, session
 from flask_login import login_user, logout_user, login_required, current_user
 from werkzeug.security import generate_password_hash
 from app import db
@@ -6,6 +6,10 @@ from models import User
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, EmailField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
+import logging
+
+# Configure logging
+logger = logging.getLogger(__name__)
 
 auth_bp = Blueprint('auth', __name__)
 
@@ -40,9 +44,6 @@ def index():
 
 @auth_bp.route('/login', methods=['GET', 'POST'])
 def login():
-    import logging
-    logger = logging.getLogger(__name__)
-    
     logger.info("Login route accessed")
     
     if current_user.is_authenticated:
@@ -50,13 +51,21 @@ def login():
         return redirect(url_for('chat.chat_page'))
     
     form = LoginForm()
+    logger.info(f"Request method: {request.method}")
+    
     if form.validate_on_submit():
         logger.info(f"Form validated, attempting login for: {form.username.data}")
         user = User.query.filter_by(username=form.username.data).first()
         
         if user and user.check_password(form.password.data):
             logger.info(f"Login successful for: {user.username}")
+            
+            # Create a fresh session
+            if 'user_id' in session:
+                session.pop('user_id')
+                
             login_user(user)
+            session['user_id'] = user.id
             user.status = 'online'
             db.session.commit()
             
@@ -69,6 +78,8 @@ def login():
         flash('Invalid username or password', 'danger')
     elif request.method == 'POST':
         logger.warning(f"Form validation failed: {form.errors}")
+        for field, errors in form.errors.items():
+            logger.warning(f"Field {field} errors: {errors}")
     
     return render_template('login.html', form=form)
 
