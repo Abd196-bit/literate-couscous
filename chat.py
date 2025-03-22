@@ -5,16 +5,33 @@ from models import User, Group, Message, ReadReceipt, user_group
 from flask_socketio import emit, join_room, leave_room
 from datetime import datetime
 import json
+import logging
 from sqlalchemy import or_, and_
+
+# Configure logging
+logger = logging.getLogger(__name__)
 
 chat_bp = Blueprint('chat', __name__)
 
 @chat_bp.route('/chat')
 @login_required
 def chat_page():
+    logger.info(f"Chat page accessed by: {current_user.username}")
     users = User.query.filter(User.id != current_user.id).all()
     user_groups = current_user.groups.filter_by(is_direct_chat=False).all()
     return render_template('chat.html', users=users, groups=user_groups)
+
+@chat_bp.route('/api/users')
+@login_required
+def get_users():
+    logger.info(f"Getting users list for: {current_user.username}")
+    users = User.query.filter(User.id != current_user.id).all()
+    user_list = [{
+        'id': user.id,
+        'username': user.username,
+        'status': user.status
+    } for user in users]
+    return jsonify(user_list)
 
 @chat_bp.route('/api/conversations')
 @login_required

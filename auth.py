@@ -40,20 +40,35 @@ def index():
 
 @auth_bp.route('/login', methods=['GET', 'POST'])
 def login():
+    import logging
+    logger = logging.getLogger(__name__)
+    
+    logger.info("Login route accessed")
+    
     if current_user.is_authenticated:
+        logger.info(f"User already authenticated: {current_user.username}")
         return redirect(url_for('chat.chat_page'))
     
     form = LoginForm()
     if form.validate_on_submit():
+        logger.info(f"Form validated, attempting login for: {form.username.data}")
         user = User.query.filter_by(username=form.username.data).first()
+        
         if user and user.check_password(form.password.data):
+            logger.info(f"Login successful for: {user.username}")
             login_user(user)
             user.status = 'online'
             db.session.commit()
             
             next_page = request.args.get('next')
-            return redirect(next_page or url_for('chat.chat_page'))
+            redirect_url = next_page or url_for('chat.chat_page')
+            logger.info(f"Redirecting to: {redirect_url}")
+            return redirect(redirect_url)
+        
+        logger.warning(f"Invalid login attempt for: {form.username.data}")
         flash('Invalid username or password', 'danger')
+    elif request.method == 'POST':
+        logger.warning(f"Form validation failed: {form.errors}")
     
     return render_template('login.html', form=form)
 
