@@ -17,9 +17,17 @@ chat_bp = Blueprint('chat', __name__)
 @login_required
 def chat_page():
     logger.info(f"Chat page accessed by: {current_user.username}")
-    users = User.query.filter(User.id != current_user.id).all()
-    user_groups = current_user.groups.filter_by(is_direct_chat=False).all()
-    return render_template('chat.html', users=users, groups=user_groups)
+    try:
+        users = User.query.filter(User.id != current_user.id).all()
+        logger.info(f"Found {len(users)} users")
+        user_groups = current_user.groups.filter_by(is_direct_chat=False).all()
+        logger.info(f"Found {len(user_groups)} groups")
+        logger.info("Rendering chat.html template")
+        return render_template('chat.html', users=users, groups=user_groups)
+    except Exception as e:
+        logger.error(f"Error in chat_page route: {str(e)}")
+        logger.exception("Exception details:")
+        raise
 
 @chat_bp.route('/api/users')
 @login_required

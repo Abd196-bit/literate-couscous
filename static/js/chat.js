@@ -380,7 +380,7 @@ function openNewChatModal() {
                 .map(conv => conv.user_id);
             
             // Fetch all users
-            fetch('/users')
+            fetch('/api/users')
                 .then(response => response.json())
                 .then(users => {
                     // Filter out users already in direct chats
