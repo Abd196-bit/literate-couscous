@@ -6,7 +6,7 @@ download_bp = Blueprint('download', __name__)
 def download_project():
     """Route to download the project zip file"""
     try:
-        return send_file('/home/runner/workspace/literate-couscous-clean.zip',
+        return send_file('literate-couscous-clean.zip',
                         mimetype='application/zip',
                         as_attachment=True,
                         download_name='literate-couscous-clean.zip')
