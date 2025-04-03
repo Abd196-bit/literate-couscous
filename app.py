@@ -1,6 +1,7 @@
 import os
 import logging
 import secrets
+import eventlet
 
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
@@ -19,7 +20,7 @@ class Base(DeclarativeBase):
 
 # Initialize extensions
 db = SQLAlchemy(model_class=Base)
-socketio = SocketIO()
+socketio = SocketIO(async_mode=None)
 login_manager = LoginManager()
 csrf = CSRFProtect()
 sess = Session()
@@ -42,17 +43,13 @@ app.config['WTF_CSRF_ENABLED'] = True
 app.config['WTF_CSRF_SECRET_KEY'] = app.secret_key
 app.config['WTF_CSRF_SSL_STRICT'] = False  # More permissive during development
 
-# Configure the database
-app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URL", "sqlite:///we_quack.db")
-app.config["SQLALCHEMY_ENGINE_OPTIONS"] = {
-    "pool_recycle": 300,
-    "pool_pre_ping": True,
-}
+# Configure the database - use SQLite for development
+app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///chat.db"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
 # Initialize extensions with the app
 db.init_app(app)
-socketio.init_app(app, cors_allowed_origins="*", manage_session=True)  # Changed to True
+socketio.init_app(app, cors_allowed_origins="*", manage_session=False)
 login_manager.init_app(app)
 csrf.init_app(app)
 sess.init_app(app)
