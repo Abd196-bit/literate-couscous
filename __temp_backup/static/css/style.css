@@ -1,0 +1,442 @@
+/* Import Pixel Font */
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
+@import url('../fonts/pixel.css');
+
+:root {
+    --black: #000000;
+    --dark-gray: #121212;
+    --medium-gray: #222222;
+    --light-gray: #444444;
+    --bright-yellow: #ffff00;
+    --dark-yellow: #e6e600;
+}
+
+/* Basic Styling */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Press Start 2P', 'VT323', monospace;
+    background-color: var(--black);
+    color: white;
+    line-height: 1.6;
+}
+
+/* Containers */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1rem;
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Press Start 2P', cursive;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+}
+
+h1 {
+    font-size: 2rem;
+    text-align: center;
+    margin: 2rem 0;
+    color: var(--bright-yellow);
+    text-shadow: 2px 2px 0 rgba(255, 255, 0, 0.3);
+}
+
+p {
+    margin-bottom: 1rem;
+}
+
+/* Links */
+a {
+    color: var(--bright-yellow);
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+a:hover {
+    color: var(--dark-yellow);
+    text-decoration: underline;
+}
+
+/* Buttons */
+.btn {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    background-color: var(--bright-yellow);
+    color: var(--black);
+    border: none;
+    border-radius: 0;
+    cursor: pointer;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 1rem;
+    text-transform: uppercase;
+    transition: background-color 0.3s, transform 0.1s;
+    box-shadow: 3px 3px 0 rgba(255, 255, 0, 0.3);
+}
+
+.btn:hover {
+    background-color: var(--dark-yellow);
+    transform: translateY(-2px);
+}
+
+.btn:active {
+    transform: translateY(0);
+    box-shadow: 1px 1px 0 rgba(255, 255, 0, 0.3);
+}
+
+.btn-sm {
+    padding: 0.5rem 1rem;
+    font-size: 0.8rem;
+}
+
+/* Forms */
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+textarea,
+select {
+    width: 100%;
+    padding: 0.75rem;
+    background-color: var(--medium-gray);
+    color: white;
+    border: 2px solid var(--light-gray);
+    border-radius: 0;
+    font-family: 'VT323', monospace;
+    font-size: 1.25rem;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus,
+textarea:focus,
+select:focus {
+    outline: none;
+    border-color: var(--bright-yellow);
+}
+
+/* Auth Pages */
+.auth-container {
+    max-width: 500px;
+    margin: 0 auto;
+    background-color: var(--dark-gray);
+    padding: 2rem;
+    border: 4px solid var(--bright-yellow);
+    margin-top: 5vh;
+}
+
+.auth-container h2 {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.auth-links {
+    margin-top: 1.5rem;
+    text-align: center;
+}
+
+/* Flash Messages */
+.alert {
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border-radius: 0;
+    font-family: 'VT323', monospace;
+    font-size: 1.2rem;
+    border: 2px solid transparent;
+}
+
+.alert-success {
+    background-color: rgba(0, 255, 0, 0.2);
+    border-color: #00ff00;
+    color: #00ff00;
+}
+
+.alert-danger {
+    background-color: rgba(255, 0, 0, 0.2);
+    border-color: #ff0000;
+    color: #ff0000;
+}
+
+.alert-info {
+    background-color: rgba(0, 255, 255, 0.2);
+    border-color: #00ffff;
+    color: #00ffff;
+}
+
+/* Chat Page Layout */
+.chat-container {
+    display: grid;
+    grid-template-columns: 250px 1fr;
+    grid-template-rows: 60px 1fr;
+    grid-template-areas:
+        "header header"
+        "sidebar main";
+    height: 100vh;
+    overflow: hidden;
+}
+
+.header {
+    grid-area: header;
+    background-color: var(--dark-gray);
+    border-bottom: 2px solid var(--bright-yellow);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 1rem;
+}
+
+.sidebar {
+    grid-area: sidebar;
+    background-color: var(--medium-gray);
+    border-right: 2px solid var(--bright-yellow);
+    padding: 1rem;
+    overflow-y: auto;
+}
+
+.main {
+    grid-area: main;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+/* Chat Elements */
+.chat-header {
+    padding: 1rem;
+    background-color: var(--dark-gray);
+    border-bottom: 2px solid var(--bright-yellow);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.chat-messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.chat-input {
+    padding: 1rem;
+    background-color: var(--dark-gray);
+    border-top: 2px solid var(--bright-yellow);
+    display: flex;
+}
+
+.chat-input input {
+    flex: 1;
+    margin-right: 0.5rem;
+}
+
+/* Friends List */
+.friends-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    cursor: pointer;
+}
+
+.friends-list {
+    margin-bottom: 1.5rem;
+}
+
+.friend-item, .group-item {
+    padding: 0.75rem;
+    background-color: var(--dark-gray);
+    margin-bottom: 0.5rem;
+    cursor: pointer;
+    border-left: 4px solid transparent;
+    transition: all 0.2s;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.friend-item:hover, .group-item:hover {
+    background-color: var(--light-gray);
+    border-left-color: var(--bright-yellow);
+}
+
+.friend-item.active, .group-item.active {
+    background-color: var(--light-gray);
+    border-left-color: var(--bright-yellow);
+}
+
+.friend-status {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin-right: 0.5rem;
+}
+
+.status-online {
+    background-color: #00ff00;
+}
+
+.status-offline {
+    background-color: #ff0000;
+}
+
+/* Messages */
+.message {
+    max-width: 80%;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border-radius: 0;
+    position: relative;
+    font-family: 'VT323', monospace;
+    font-size: 1.2rem;
+    line-height: 1.4;
+}
+
+.message-sent {
+    align-self: flex-end;
+    background-color: var(--dark-yellow);
+    color: var(--black);
+    margin-left: auto;
+}
+
+.message-received {
+    align-self: flex-start;
+    background-color: var(--medium-gray);
+    color: white;
+    margin-right: auto;
+}
+
+.message-info {
+    font-size: 0.7rem;
+    margin-top: 0.5rem;
+    display: flex;
+    justify-content: space-between;
+    opacity: 0.8;
+}
+
+.message-timestamp {
+    font-style: italic;
+}
+
+.message-read {
+    font-style: italic;
+}
+
+/* Groups */
+.groups-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    margin-top: 1rem;
+    cursor: pointer;
+}
+
+.groups-list {
+    margin-bottom: 1.5rem;
+}
+
+/* Modal */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+.modal-content {
+    background-color: var(--dark-gray);
+    margin: 10% auto;
+    padding: 2rem;
+    border: 4px solid var(--bright-yellow);
+    width: 80%;
+    max-width: 500px;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.close {
+    color: var(--bright-yellow);
+    font-size: 1.5rem;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close:hover {
+    color: var(--dark-yellow);
+}
+
+/* Checkboxes */
+.checkbox-group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.checkbox-group input[type="checkbox"] {
+    margin-right: 0.5rem;
+}
+
+/* New message indicator */
+.unread-count {
+    background-color: var(--bright-yellow);
+    color: var(--black);
+    padding: 0.25rem 0.5rem;
+    border-radius: 50%;
+    font-size: 0.8rem;
+    min-width: 20px;
+    text-align: center;
+}
+
+/* Landing page */
+.landing-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    text-align: center;
+    padding: 1rem;
+}
+
+.landing-title {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    color: var(--bright-yellow);
+    text-shadow: 3px 3px 0 rgba(255, 255, 0, 0.3);
+}
+
+.landing-subtitle {
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+    max-width: 800px;
+}
+
+.landing-buttons {
+    display: flex;
+    gap: 1rem;
+}
