@@ -20,8 +20,11 @@ def chat_page():
     try:
         users = User.query.filter(User.id != current_user.id).all()
         logger.info(f"Found {len(users)} users")
-        user_groups = current_user.groups.filter_by(is_direct_chat=False).all()
+        
+        # Use a filter on the list itself since groups is an InstrumentedList, not a query
+        user_groups = [group for group in current_user.groups if not group.is_direct_chat]
         logger.info(f"Found {len(user_groups)} groups")
+        
         logger.info("Rendering chat.html template")
         return render_template('chat.html', users=users, groups=user_groups)
     except Exception as e:
@@ -45,7 +48,7 @@ def get_users():
 @login_required
 def get_conversations():
     # Get all groups the user is in (including direct chats)
-    user_groups = current_user.groups.all()
+    user_groups = current_user.groups
     
     conversations = []
     for group in user_groups:
