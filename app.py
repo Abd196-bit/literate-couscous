@@ -60,9 +60,11 @@ login_manager.login_message_category = 'info'
 # Register blueprints
 from auth import auth_bp
 from chat import chat_bp
+from download import download_bp
 
 app.register_blueprint(auth_bp)
 app.register_blueprint(chat_bp)
+app.register_blueprint(download_bp)
 
 # Create database tables
 with app.app_context():
