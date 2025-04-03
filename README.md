@@ -1,4 +1,4 @@
-# Swift.io Chat Application
+# We Quack Chat Application
 
 A real-time chat application built with Flask and WebSockets, featuring a retro-inspired pixel font interface and unique design elements.
 
@@ -11,6 +11,7 @@ A real-time chat application built with Flask and WebSockets, featuring a retro-
 - Read receipts
 - Distinctive pixel font UI design
 - Dark mode interface with yellow accents
+- Project download functionality
 
 ## Technologies Used
 
@@ -25,8 +26,8 @@ A real-time chat application built with Flask and WebSockets, featuring a retro-
 
 1. Clone the repository:
    ```
-   git clone https://github.com/Abd196-bit/swift.io.git
-   cd swift.io
+   git clone https://github.com/Abd196-bit/literate-couscous.git
+   cd literate-couscous
    ```
 
 2. Install dependencies:
@@ -51,6 +52,7 @@ A real-time chat application built with Flask and WebSockets, featuring a retro-
 - `models.py`: Database models
 - `app.py`: Application setup and configuration
 - `main.py`: Entry point for the application
+- `download.py`: Project download functionality
 - `static/`: Static files (CSS, JavaScript, fonts)
 - `templates/`: HTML templates
 
